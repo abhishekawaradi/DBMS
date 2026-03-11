@@ -1,0 +1,31 @@
+CREATE TABLE Employee ( 
+    E_id NUMBER(5) PRIMARY KEY, 
+    E_name VARCHAR2(50), 
+    Age NUMBER(3), 
+    Salary NUMBER(10,2) 
+); 
+INSERT INTO Employee VALUES (1, 'Amit', 25, 30000); 
+INSERT INTO Employee VALUES (2, 'Ravi', 30, 45000); 
+INSERT INTO Employee VALUES (3, 'Sita', 28, 40000); 
+COMMIT; 
+SET SERVEROUTPUT ON; 
+DECLARE 
+    v_id Employee.E_id%TYPE; 
+    v_name Employee.E_name%TYPE; 
+    v_age Employee.Age%TYPE; 
+    v_salary Employee.Salary%TYPE; 
+    CURSOR emp_cursor IS 
+        SELECT E_id, E_name, Age, Salary FROM Employee; 
+BEGIN 
+    OPEN emp_cursor; 
+    LOOP 
+        FETCH emp_cursor INTO v_id, v_name, v_age, v_salary; 
+        EXIT WHEN emp_cursor%NOTFOUND; 
+        DBMS_OUTPUT.PUT_LINE('ID: ' || v_id || 
+                             ' Name: ' || v_name || 
+                             ' Age: ' || v_age || 
+                             ' Salary: ' || v_salary); 
+    END LOOP; 
+    CLOSE emp_cursor; 
+END; 
+/

@@ -1,0 +1,26 @@
+CREATE TABLE Employee ( 
+    E_id NUMBER(5) PRIMARY KEY, 
+    E_name VARCHAR2(50), 
+    Age NUMBER(3), 
+    Salary NUMBER(10,2) 
+); 
+INSERT INTO Employee VALUES (1, 'Amit', 25, 30000); 
+INSERT INTO Employee VALUES (2, 'Ravi', 30, 45000); 
+INSERT INTO Employee VALUES (3, 'Sita', 28, 40000); 
+INSERT INTO Employee VALUES (4, 'Kiran', 35, 55000); 
+INSERT INTO Employee VALUES (5, 'Neha', 30, 45000); 
+COMMIT; 
+SELECT * FROM Employee; 
+SELECT COUNT(E_name) AS Total_Employees 
+FROM Employee; 
+SELECT MAX(Age) AS Maximum_Age 
+FROM Employee; 
+SELECT MIN(Age) AS Minimum_Age 
+FROM Employee; 
+SELECT E_name, Salary 
+FROM Employee 
+ORDER BY Salary ASC; 
+SELECT Salary, COUNT(*) AS No_of_Employees 
+FROM Employee 
+GROUP BY Salary 
+ORDER BY Salary;

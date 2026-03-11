@@ -1,0 +1,44 @@
+CREATE TABLE O_RollCall ( 
+    RollNo NUMBER PRIMARY KEY, 
+    Name VARCHAR2(50) 
+); 
+CREATE TABLE N_RollCall ( 
+    RollNo NUMBER, 
+    Name VARCHAR2(50) 
+); 
+INSERT INTO O_RollCall VALUES (1, 'Amit'); 
+INSERT INTO O_RollCall VALUES (2, 'Ravi'); 
+INSERT INTO N_RollCall VALUES (2, 'Ravi');   -- Already exists 
+INSERT INTO N_RollCall VALUES (3, 'Sita'); 
+INSERT INTO N_RollCall VALUES (4, 'Kiran'); 
+COMMIT; 
+SET SERVEROUTPUT ON; 
+DECLARE 
+    CURSOR new_cursor(p_roll NUMBER) IS 
+        SELECT RollNo, Name 
+        FROM N_RollCall 
+        WHERE RollNo = p_roll; 
+    v_roll N_RollCall.RollNo%TYPE; 
+    v_name N_RollCall.Name%TYPE; 
+    v_count NUMBER; 
+BEGIN 
+    FOR rec IN (SELECT RollNo FROM N_RollCall) LOOP 
+        OPEN new_cursor(rec.RollNo); 
+        FETCH new_cursor INTO v_roll, v_name; 
+        IF new_cursor%FOUND THEN 
+            SELECT COUNT(*) 
+            INTO v_count 
+            FROM O_RollCall 
+            WHERE RollNo = v_roll; 
+            IF v_count = 0 THEN 
+                INSERT INTO O_RollCall VALUES (v_roll, v_name); 
+                DBMS_OUTPUT.PUT_LINE('Inserted RollNo: ' || v_roll); 
+            ELSE 
+                DBMS_OUTPUT.PUT_LINE('Skipped RollNo: ' || v_roll); 
+            END IF; 
+        END IF; 
+        CLOSE new_cursor; 
+    END LOOP; 
+    COMMIT; 
+END; 
+/ 

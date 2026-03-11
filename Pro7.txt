@@ -1,0 +1,31 @@
+use companyDB 
+db.createCollec on("employees") 
+db.employees.insertOne({ 
+    emp_id: 1, 
+    name: "Amit", 
+    age: 25, 
+    salary: 30000 
+}) 
+db.employees.insertMany([ 
+    {emp_id: 2, name: "Ravi", age: 30, salary: 45000}, 
+    {emp_id: 3, name: "Sita", age: 28, salary: 40000}, 
+    {emp_id: 4, name: "Kiran", age: 35, salary: 55000} 
+]) 
+db.employees.find().pre y() 
+db.employees.find({emp_id: 2}) 
+db.employees.find({salary: {$gt: 35000}}) 
+db.employees.countDocuments() 
+db.employees.find().sort({salary: 1}) 
+db.employees.find().sort({salary: -1}) 
+db.employees.updateOne( 
+    {emp_id: 1}, 
+    {$set: {salary: 35000}} 
+) 
+db.employees.updateMany( 
+    {age: 30}, 
+    {$set: {salary: 50000}} 
+) 
+db.employees.find().pre y() 
+db.employees.deleteOne({emp_id: 3}) 
+db.employees.deleteMany({salary: {$gt: 50000}}) 
+db.employees.find().pre y()

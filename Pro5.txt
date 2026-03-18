@@ -1,31 +1,46 @@
-CREATE TABLE Employee ( 
-    E_id NUMBER(5) PRIMARY KEY, 
-    E_name VARCHAR2(50), 
-    Age NUMBER(3), 
-    Salary NUMBER(10,2) 
-); 
-INSERT INTO Employee VALUES (1, 'Amit', 25, 30000); 
-INSERT INTO Employee VALUES (2, 'Ravi', 30, 45000); 
-INSERT INTO Employee VALUES (3, 'Sita', 28, 40000); 
-COMMIT; 
-SET SERVEROUTPUT ON; 
+CREATE TABLE employee601 (
+    e_id NUMBER(10), 
+    e_name VARCHAR2(30), 
+    age NUMBER(10), 
+    salary NUMBER(10)
+);
+
+DESC employee601;
+
+INSERT INTO employee601 VALUES (101,'Kumar',45,20000); 
+INSERT INTO employee601 VALUES (102,'Rohan',42,10000); 
+INSERT INTO employee601 VALUES (103,'Kumar',38,9000); 
+INSERT INTO employee601 VALUES (104,'Chandu',35,9000); 
+INSERT INTO employee601 VALUES (105,'Keerthi',36,9000); 
+
+SELECT * FROM employee601;
+
 DECLARE 
-    v_id Employee.E_id%TYPE; 
-    v_name Employee.E_name%TYPE; 
-    v_age Employee.Age%TYPE; 
-    v_salary Employee.Salary%TYPE; 
     CURSOR emp_cursor IS 
-        SELECT E_id, E_name, Age, Salary FROM Employee; 
-BEGIN 
-    OPEN emp_cursor; 
-    LOOP 
-        FETCH emp_cursor INTO v_id, v_name, v_age, v_salary; 
-        EXIT WHEN emp_cursor%NOTFOUND; 
-        DBMS_OUTPUT.PUT_LINE('ID: ' || v_id || 
-                             ' Name: ' || v_name || 
-                             ' Age: ' || v_age || 
-                             ' Salary: ' || v_salary); 
-    END LOOP; 
-    CLOSE emp_cursor; 
-END; 
+        SELECT e_id, e_name, age, salary FROM employee601;
+
+    v_e_id     NUMBER;
+    v_e_name   VARCHAR2(20);
+    v_age      NUMBER;
+    v_salary   NUMBER;
+
+BEGIN
+    OPEN emp_cursor;
+
+    LOOP
+        FETCH emp_cursor INTO v_e_id, v_e_name, v_age, v_salary;
+        EXIT WHEN emp_cursor%NOTFOUND;
+
+        DBMS_OUTPUT.PUT_LINE('Employee ID: ' || v_e_id);
+        DBMS_OUTPUT.PUT_LINE('Employee Name: ' || v_e_name);
+        DBMS_OUTPUT.PUT_LINE('Employee Age: ' || v_age);
+        DBMS_OUTPUT.PUT_LINE('Employee Salary: ' || v_salary);
+        DBMS_OUTPUT.PUT_LINE('-----------------------------');
+
+    END LOOP;
+
+    CLOSE emp_cursor;
+END;
 /
+
+SELECT * FROM employee601;

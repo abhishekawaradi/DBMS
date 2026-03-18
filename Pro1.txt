@@ -1,28 +1,38 @@
-    CREATE USER abhishek IDENTIFIED BY abhishek; 
-GRANT CONNECT, RESOURCE TO abhishek; 
-GRANT UNLIMITED TABLESPACE TO abhishek; 
-CREATE TABLE Employee ( 
-    EMPNO NUMBER(5), 
-    ENAME VARCHAR2(50), 
-    JOB VARCHAR2(50), 
-    MANAGER_NO NUMBER(5), 
-    SAL NUMBER(10,2), 
-    COMMISSION NUMBER(10,2) 
-); 
-INSERT INTO Employee VALUES (101, 'John', 'Manager', 100, 50000, 5000); 
-INSERT INTO Employee VALUES (102, 'Smith', 'Clerk', 101, 25000, 2000); 
-INSERT INTO Employee VALUES (103, 'Allen', 'Salesman', 101, 30000, 3000); 
-SELECT * FROM Employee; 
-INSERT INTO Employee VALUES (201, 'David', 'HR', 101, 40000, 1500); 
-ROLLBACK; 
-SELECT * FROM Employee; 
-ALTER TABLE Employee 
-ADD CONSTRAINT emp_pk PRIMARY KEY (EMPNO); 
-ALTER TABLE Employee 
-MODIFY ENAME VARCHAR2(50) NOT NULL; 
-ALTER TABLE Employee 
-MODIFY JOB VARCHAR2(50) NOT NULL; 
-ALTER TABLE Employee 
-MODIFY SAL NUMBER(10,2) NOT NULL; 
-INSERT INTO Employee (EMPNO, ENAME, JOB, MANAGER_NO, SAL, COMMISSION) 
-VALUES (104, NULL, NULL, 101, NULL, 2000); 
+   CREATE TABLE employee (
+    empno NUMBER(10),
+    ename VARCHAR2(10),
+    job VARCHAR2(10),
+    manager_no NUMBER(10),
+    sal NUMBER(10),
+    commission NUMBER(10)
+);
+
+
+DESC employee;
+
+INSERT INTO employee (empno, ename, job, manager_no, sal, commission)VALUES (1,'Abhi','Manager',1,20000,1000);
+
+INSERT INTO employee (empno, ename, job, manager_no, sal, commission)VALUES (2,'Rohan','Analyst',1,10000,100);
+
+INSERT INTO employee (empno, ename, job, manager_no, sal, commission)VALUES (3,'David','Clerk',1,9000,50);
+
+BEGIN  
+    INSERT INTO employee (empno, ename, job, manager_no, sal, commission)
+    VALUES (4,'Karan','Manager',1,20000,1000);  
+    ROLLBACK;  
+END;
+/
+
+SELECT * FROM employee;
+
+ALTER TABLE employee MODIFY empno NOT NULL NOVALIDATE;
+
+ALTER TABLE employee ADD CONSTRAINT pk_emp PRIMARY KEY (empno);
+
+INSERT INTO employee (empno, ename, job, manager_no, sal, commission)VALUES (5,'Kumar','Admin',NULL,NULL,NULL);
+
+INSERT INTO employee (empno, ename, job, manager_no, sal, commission)VALUES (6,'Suhan', NULL, NULL, NULL, NULL);
+
+INSERT INTO employee (empno, ename, job, manager_no, sal, commission)VALUES (7, NULL, NULL, NULL, NULL, NULL);
+
+SELECT * FROM employee;

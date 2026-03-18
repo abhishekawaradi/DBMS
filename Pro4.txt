@@ -1,35 +1,43 @@
-CREATE TABLE CUSTOMERS ( 
-    ID NUMBER(5) PRIMARY KEY, 
-    NAME VARCHAR2(50), 
-    AGE NUMBER(3), 
-    ADDRESS VARCHAR2(100), 
-    SALARY NUMBER(10,2) 
-); 
-INSERT INTO CUSTOMERS VALUES (1, 'Amit', 25, 'Delhi', 30000); 
-INSERT INTO CUSTOMERS VALUES (2, 'Ravi', 30, 'Mumbai', 40000); 
-COMMIT; 
-CREATE OR REPLACE TRIGGER salary_diff_trigger 
-BEFORE INSERT OR UPDATE OR DELETE 
-ON CUSTOMERS 
-FOR EACH ROW 
+create table customers (id number(10), 
+name varchar2(30),  
+age number(10),  
+address varchar2(50),  
+salary number(10)); 
+
+insert into customers (id, name, age, address, salary) values(101,'Kumar',45,'Bengalure',20000) 
+insert into customers (id, name, age, address, salary) values(102,'Rohan',42,'Tumkuru', 10000); 
+insert into customers (id, name, age, address, salary) values(103,'Kumar',38,'Belagavi', 9000); 
+insert into customers (id, name, age, address, salary) values(104,'Chandu',35,'Tiptur ', 9000); 
+insert into customers (id, name, age, address, salary) values(105,'Keerthi',36,'Mangaluru',9000);
+
+select * from customers; 
+
+
+CREATE OR REPLACE TRIGGER display_salary_changes
+BEFORE INSERT OR UPDATE OR DELETE
+ON customers
+FOR EACH ROW
 DECLARE 
-    salary_difference NUMBER; 
-BEGIN 
-    IF UPDATING THEN 
-        salary_difference := :NEW.SALARY - :OLD.SALARY; 
-        DBMS_OUTPUT.PUT_LINE('Salary Difference: ' || salary_difference); 
-    ELSIF INSERTING THEN 
-        DBMS_OUTPUT.PUT_LINE('New Salary Inserted: ' || :NEW.SALARY); 
-    ELSIF DELETING THEN 
-        DBMS_OUTPUT.PUT_LINE('Deleted Salary Was: ' || :OLD.SALARY); 
-    END IF; 
-END; 
-/ 
-SET SERVEROUTPUT ON; 
-UPDATE CUSTOMERS 
-SET SALARY = 35000 
-WHERE ID = 1; 
-INSERT INTO CUSTOMERS 
-VALUES (3, 'Sita', 28, 'Chennai', 45000); 
-DELETE FROM CUSTOMERS 
-WHERE ID = 2;
+    sal_diff NUMBER;
+BEGIN
+    IF INSERTING THEN
+        DBMS_OUTPUT.PUT_LINE('New salary: ' || :NEW.salary);
+    ELSIF DELETING THEN
+        DBMS_OUTPUT.PUT_LINE('Old salary: ' || :OLD.salary);
+    ELSIF UPDATING THEN
+        sal_diff := :NEW.salary - :OLD.salary;
+        DBMS_OUTPUT.PUT_LINE('Old salary: ' || :OLD.salary);
+        DBMS_OUTPUT.PUT_LINE('New salary: ' || :NEW.salary);
+        DBMS_OUTPUT.PUT_LINE('Salary difference: ' || sal_diff);
+    END IF;
+END;
+/
+
+
+insert into customers (id, name, age, address, salary) values (105,'Keerthi',36, 'Mangaluru',9000);
+
+update customers SET salary=10000 where id=105;
+
+delete from customers where id=105; 
+
+select * from customers;

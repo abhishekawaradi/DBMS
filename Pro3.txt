@@ -1,26 +1,30 @@
-CREATE TABLE Employee ( 
-    E_id NUMBER(5) PRIMARY KEY, 
-    E_name VARCHAR2(50), 
-    Age NUMBER(3), 
-    Salary NUMBER(10,2) 
+CREATE TABLE Employee301 ( 
+E_id VARCHAR(20) PRIMARY KEY, 
+E_name VARCHAR(50), 
+Age NUMBER(2), 
+Salary NUMBER(10, 2) 
 ); 
-INSERT INTO Employee VALUES (1, 'Amit', 25, 30000); 
-INSERT INTO Employee VALUES (2, 'Ravi', 30, 45000); 
-INSERT INTO Employee VALUES (3, 'Sita', 28, 40000); 
-INSERT INTO Employee VALUES (4, 'Kiran', 35, 55000); 
-INSERT INTO Employee VALUES (5, 'Neha', 30, 45000); 
-COMMIT; 
-SELECT * FROM Employee; 
-SELECT COUNT(E_name) AS Total_Employees 
-FROM Employee; 
-SELECT MAX(Age) AS Maximum_Age 
-FROM Employee; 
-SELECT MIN(Age) AS Minimum_Age 
-FROM Employee; 
-SELECT E_name, Salary 
-FROM Employee 
-ORDER BY Salary ASC; 
-SELECT Salary, COUNT(*) AS No_of_Employees 
-FROM Employee 
-GROUP BY Salary 
-ORDER BY Salary;
+ 
+DESC Employee301 
+
+INSERT INTO Employee301(E_id,E_name,Age,Salary) values(1,'John',23,40000) 
+INSERT INTO Employee301(E_id,E_name,Age,Salary) values(2,'Smith',25,50000) 
+INSERT INTO Employee301(E_id,E_name,Age,Salary) values(3,'Alex',22,60000) 
+INSERT INTO Employee301(E_id,E_name,Age,Salary) values(4,'Kevin',24,70000) 
+INSERT INTO Employee301(E_id,E_name,Age,Salary) values(5,'Albert',20,50000) 
+
+SELECT * FROM Employee301
+
+select count(E_name) from Employee301 
+
+select MAX(Age) FROM Employee301 
+
+select MIN(Age) FROM Employee301 
+
+Select Salary FROM Employee301 ORDER BY Salary ASC 
+
+Select Salary FROM Employee301 ORDER BY Salary DESC
+
+SELECT SALARY, COUNT(*) AS NumEmployees FROM Employee301 GROUP BY Salary;
+
+SELECT * FROM Employee301
